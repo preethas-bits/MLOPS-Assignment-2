@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <script type="text/javascript" src="/static/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+
+</head>
+<body>
+    <div class="tab">
+      <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'Simple')">Enter Text</button>
+      <button class="tablinks" onclick="openTab(event, 'Advanced')">Upload Files</button>
+    </div>
+
+    <div id="Simple" class="tabcontent ">
+        <h1>Sentiment Analysis</h1>
+        <textarea id="inputText" placeholder="Type your text here..."></textarea>
+        <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+        <div id="result" class="result"></div>
+        <div id="sentimentLabel" class="sentiment-label"></div>
+        <div id="chart" class="bar-chart">
+            <div id="sentimentBar" class="bar"></div>
+        </div>
+    </div>
+
+
+   <div id="Advanced"  class="tabcontent">
+        <h1>Sentiment Analysis</h1>
+          <div class="upload-div">
+            <h4>Upload CSV</h4>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="fileInput" name="file" accept=".csv" required>
+                <button type="button" onclick="uploadFile()">Upload</button>
+            </form>
+              <table>
+               <thead>
+                <tr>
+                    <th>Text</th>
+                    <th>Sentiment</th>
+                    <th>Confidence</th>
+                </tr>
+              </thead>
+            <tbody>
+                <!-- Rows will be inserted here by JavaScript -->
+            </tbody>
+             </table>
+           </div>
+    </div>
+
+
+
+</body>
+ <script>
+        document.getElementById("defaultOpen").click();
+        var sentimentBar = document.getElementById('chart');
+        sentimentBar.className = "hide";
+    </script>
+</html>
