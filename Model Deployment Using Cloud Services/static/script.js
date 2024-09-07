@@ -1,128 +1,86 @@
-  function analyzeSentiment() {
-            var text = document.getElementById('inputText').value;
-            if (!text.trim()) {
-               alert('Please fill in all the fields');
-            } else {
-              fetch('/predict', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    text: text
-                }),
-               })
-            .then(response => response.json())
-            .then(result => {
-              showResults(result);
-            })
+async function sendPredictionRequest() {
+    if (!validateForm()) {
+        return;
+    }
+    // Get values from form inputs
+    const Pclass = document.getElementById('Pclass').value;
+    const Sex_encoded = document.querySelector('input[name="Sex_encoded"]:checked').value;
+    const Age = document.getElementById('Age').value;
+    const SibSp = document.getElementById('SibSp').value;
+    const Parch = document.getElementById('Parch').value;
+    const Fare = document.getElementById('Fare').value;
+    const Embarked_encoded = document.querySelector('input[name="Embarked_encoded"]:checked').value;
 
-            }
+    // Create the JSON payload
+    const payload = {
+        Pclass: parseInt(Pclass),
+        Sex_encoded: parseInt(Sex_encoded),
+        Age: parseFloat(Age),
+        SibSp: parseInt(SibSp),
+        Parch: parseInt(Parch),
+        Fare: parseFloat(Fare),
+        Embarked_encoded: parseInt(Embarked_encoded)
+    };
 
-        }
+    try {
+        fetch('http://4.156.132.129:5000/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+           })
+        .then(response => response.json())
+        .then(result => {
+          if (result.prediction == 'true') {
+            document.getElementById('result').innerText = 'Patient survived';
+          } else {
+            document.getElementById('result').innerText = 'Patient did not survive';
+          }
+        })
 
-
-
-
-function showResults(result) {
-  var text = document.getElementById('inputText').value;
-            var resultDiv = document.getElementById('result');
-            var sentimentLabel = document.getElementById('sentimentLabel');
-            var sentimentBar = document.getElementById('chart');
-            sentimentBar.className = "show";
-            // Simulate sentiment analysis result
-            var sentiment = result.sentiment; // Replace with actual sentiment result
-            var sentimentScore = result.confidence;  // Replace with actual sentiment score (between 0 and 1)
-
-            // Set the sentiment label and color
-            if (sentiment === "Positive") {
-                sentimentLabel.innerHTML = "Positive";
-                sentimentLabel.className = "sentiment-label positive";
-                sentimentBar.className = "bar bar-positive";
-            } else if (sentiment === "Negative") {
-                sentimentLabel.innerHTML = "Negative";
-                sentimentLabel.className = "sentiment-label negative";
-                sentimentBar.className = "bar bar-negative";
-            } else {
-                sentimentLabel.innerHTML = "Neutral";
-                sentimentLabel.className = "sentiment-label neutral";
-                sentimentBar.className = "bar bar-neutral";
-            }
-
-            // Set the bar width based on the sentiment score
-            sentimentBar.style.width = (sentimentScore * 100) + "%";
-            sentimentBar.innerHTML = (sentimentScore * 100).toFixed(0) + "%";
-
-            // Display the result
-            resultDiv.innerHTML = "Sentiment: " + sentiment;
+    } catch (error) {
+        document.getElementById('result').innerText = `Error: ${error.message}`;
+    }
 }
 
-// Function to upload a CSV file to the server
-function uploadFile() {
-    var formData = new FormData(document.getElementById('uploadForm'));
+function validateForm() {
+    const pclass = parseInt(document.getElementById('Pclass').value, 10);
+    const age = parseInt(document.getElementById('Age').value, 10);
+    const sibsp = parseInt(document.getElementById('SibSp').value, 10);
+    const parch = parseInt(document.getElementById('Parch').value, 10);
 
-    fetch('/upload', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showAsTable(data.data);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+    let valid = true;
+    let errorMessage = '';
+
+    // Validate Pclass
+    if (isNaN(pclass) || pclass < 1 || pclass > 3) {
+        valid = false;
+        errorMessage += 'Pclass must be 1, 2, or 3.\n';
+    }
+
+    // Validate Age
+    if (isNaN(age) || age < 0 || age > 100) {
+        valid = false;
+        errorMessage += 'Age must be between 0 and 100.\n';
+    }
+
+    // Validate SibSp
+    if (isNaN(sibsp) || sibsp < 0 || sibsp > 10) {
+        valid = false;
+        errorMessage += 'SibSp must be between 0 and 10.\n';
+    }
+
+    // Validate Parch
+    if (isNaN(parch) || parch < 0 || parch > 2) {
+        valid = false;
+        errorMessage += 'Parch must be between 0 and 2.\n';
+    }
+
+    if (!valid) {
+        alert(errorMessage);
+    }
+
+    return valid;
 }
 
-function showAsTable(jsonData){
- // Get table body element
-        const tbody = document.querySelector('tbody');
-
-        jsonData.forEach(item => {
-            const row = document.createElement('tr');
-
-            const cellText = document.createElement('td');
-            cellText.textContent = item.text;
-            row.appendChild(cellText);
-
-            const cellSentiment = document.createElement('td');
-            cellSentiment.textContent = item.sentiment;
-            if (item.sentiment == 'Negative') {
-              cellSentiment.className = 'red';
-            } else if (item.sentiment == 'Positive') {
-              cellSentiment.className = 'green';
-            }
-            row.appendChild(cellSentiment);
-
-            const cellConfidence = document.createElement('td');
-            cellConfidence.textContent = item.confidence;
-            row.appendChild(cellConfidence);
-
-            tbody.appendChild(row);
-        });
-}
-
-
-
-function openTab(evt, cityName) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
-
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}

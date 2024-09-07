@@ -1,169 +1,65 @@
-      body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-
-                height: 100vh;
-                background-color: #f4f4f4;
-            }
-            .container {
-                width: 400px;
-                padding: 20px;
-                background-color: white;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                border-radius: 8px;
-            }
-            h1 {
-                text-align: center;
-                color: #333;
-            }
-            textarea {
-                width: 100%;
-                height: 150px;
-                padding: 10px;
-                margin: 10px 0;
-                border-radius: 4px;
-                border: 1px solid #ccc;
-                font-size: 16px;
-            }
-            button {
-                width: 100%;
-                padding: 10px;
-                background-color: #28a745;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                font-size: 16px;
-                cursor: pointer;
-            }
-            button:hover {
-                background-color: #218838;
-            }
-            .result {
-                margin-top: 20px;
-                text-align: center;
-                font-size: 18px;
-                color: #555;
-            }
-            .sentiment-label {
-                padding: 10px;
-                border-radius: 4px;
-                margin-top: 10px;
-
-                font-weight: bold;
-                display: inline-block;
-            }
-            .positive {
-                background-color: #28a745;
-            }
-            .negative {
-                background-color: #dc3545;
-            }
-            .neutral {
-                background-color: #ffc107;
-                color: #333;
-            }
-            .bar-chart {
-                width: 100%;
-                height: 30px;
-                background-color: #ccc;
-                border-radius: 4px;
-                overflow: hidden;
-                margin-top: 10px;
-            }
-            .bar {
-                height: 100%;
-                color: white;
-                text-align: center;
-                line-height: 30px;
-            }
-            .bar-positive {
-                background-color: #28a745;
-            }
-            .bar-negative {
-                background-color: #dc3545;
-            }
-            .bar-neutral {
-                background-color: #ffc107;
-                color: #333;
-            }
-            .upload-div {
-                  font-family: Arial, sans-serif;
-                  background-color: white;
-                  padding: 10px;
-    }
-
-    .red {
-      color: red;
-    }
-
-     .green {
-      color:green;
-    }
-
-    .hide {
-      display:"none";
-    }
-
-    .show {
-      display: "block";
-    }
-    table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px auto;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-
-    #fileInput {
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-
-/* Style the tab */
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-  width:100vw;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  width: 50%;
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  color:black;
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
+h1 {
+    text-align: center;
+    color: #333;
 }
 
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
+form {
+    display: flex;
+    flex-direction: column;
 }
 
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.form-group:last-child {
+    margin-right: 0;
+}
+
+label {
+    margin-bottom: 5px;
+    color: #555;
+    display: block;
+}
+
+input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.help {
+    font-size: 10px;
+    color:blue;
+}
+
+.result {
+    margin-top:2px;
+    font-weight: bold;
 }

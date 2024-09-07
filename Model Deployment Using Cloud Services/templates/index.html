@@ -3,58 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentiment Analysis</title>
-    <script type="text/javascript" src="/static/script.js"></script>
+    <title>Titanic Prediction</title>
+    
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
-
 </head>
 <body>
-    <div class="tab">
-      <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'Simple')">Enter Text</button>
-      <button class="tablinks" onclick="openTab(event, 'Advanced')">Upload Files</button>
+    <div class="container">
+        <h1>Titanic Survival Prediction</h1>
+        <form id="predictionForm" onsubmit="event.preventDefault(); sendPredictionRequest();">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Pclass">Pclass:</label>
+                    <div class="help">Ticket class (1st = 1, 2nd = 2, 3rd = 3), representing the socioeconomic status of the passengers.</div>
+                    <input type="number" id="Pclass" required>
+                </div>
+                <div class="form-group">
+                    <label>Sex:</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="Sex_encoded" value="0" checked> Male
+                        </label>
+                        <label>
+                            <input type="radio" name="Sex_encoded" value="1"> Female
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Age">Age:</label>
+                    <input type="number" step="0.01" id="Age" required>
+                </div>
+                <div class="form-group">
+                    <label for="SibSp">SibSp:</label>
+                    <div class="help">Number of siblings or spouses aboard the Titanic.</div>
+                    <input type="number" id="SibSp" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Parch">Parch:</label>
+                    <div class="help">Number of parents or children aboard the Titanic. </div>
+                    <input type="number" id="Parch" required>
+                </div>
+                <div class="form-group">
+                    <label for="Fare">Fare:</label>
+                    <input type="number" step="0.01" id="Fare" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Embarked:</label>
+                    <div class="help">Port of embarkation representing the departure point.</div>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="Embarked_encoded" value="0" checked> Cherbourg (C)
+                        </label>
+                        <label>
+                            <input type="radio" name="Embarked_encoded" value="1"> Queenstown (Q)
+                        </label>
+                        <label>
+                            <input type="radio" name="Embarked_encoded" value="2"> Southampton (S)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="result">Result:<span id="result"></span></div>
+        
     </div>
 
-    <div id="Simple" class="tabcontent ">
-        <h1>Sentiment Analysis</h1>
-        <textarea id="inputText" placeholder="Type your text here..."></textarea>
-        <button onclick="analyzeSentiment()">Analyze Sentiment</button>
-        <div id="result" class="result"></div>
-        <div id="sentimentLabel" class="sentiment-label"></div>
-        <div id="chart" class="bar-chart">
-            <div id="sentimentBar" class="bar"></div>
-        </div>
-    </div>
-
-
-   <div id="Advanced"  class="tabcontent">
-        <h1>Sentiment Analysis</h1>
-          <div class="upload-div">
-            <h4>Upload CSV</h4>
-            <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" id="fileInput" name="file" accept=".csv" required>
-                <button type="button" onclick="uploadFile()">Upload</button>
-            </form>
-              <table>
-               <thead>
-                <tr>
-                    <th>Text</th>
-                    <th>Sentiment</th>
-                    <th>Confidence</th>
-                </tr>
-              </thead>
-            <tbody>
-                <!-- Rows will be inserted here by JavaScript -->
-            </tbody>
-             </table>
-           </div>
-    </div>
-
-
-
+    <script src="/static/script.js"></script>
 </body>
- <script>
-        document.getElementById("defaultOpen").click();
-        var sentimentBar = document.getElementById('chart');
-        sentimentBar.className = "hide";
-    </script>
-</html>
+
