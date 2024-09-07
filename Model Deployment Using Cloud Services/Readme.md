@@ -43,6 +43,7 @@ This project hosts a microservice with an endpoint predict using Flask
 
 ### Using the Application
 
-curl -X POST http://127.0.0.1:5000/predict -H "Content-Type: application/json" -d "{\"features\": [5.1, 3.5, 1.4, 0.2]}"
-
+curl -X POST  http://127.0.0.1:5000/predict ^
+    -H "Content-Type: application/json" ^
+    -d "{\"Pclass\": 3, \"Sex_encoded\": 0, \"Age\": 22, \"SibSp\": 1, \"Parch\": 0, \"Fare\": 7.25, \"Embarked_encoded\": 0}"
 
